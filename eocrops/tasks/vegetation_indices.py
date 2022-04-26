@@ -261,6 +261,11 @@ class VegetationIndicesS2(EOTask) :
         self.NDVI = (self.B8A-self.B04)/(self.B8A+self.B04)
         self.NDWI = (self.B8A-self.B11)/(self.B8A+self.B11)
         self.GNDVI = (self.B8A-self.B03)/(self.B8A+self.B03)
+        self.NDI45 = (self.B05-self.B04)/(self.B05+self.B04)
+        self.IRECI = (self.B07-self.B04)/(self.B05/self.B06)
+        self.CI = (self.B04-self.B03)/(self.B04+self.B03)
+        self.BI = ((self.B04**2+self.B03**2)/4)**0.5
+        self.RI = self.B04**2/self.B03**3
 
         biopysicial_parameters = BiophysicalIndices(self.B03, self.B04, self.B05, self.B06, self.B07, self.B8A, self.B11, self.B12,
                                                     self.viewZenithMean, self.sunZenithAngles, self.viewAzimuthMean, self.sunAzimuthAngles)
@@ -311,6 +316,11 @@ class VegetationIndicesS2(EOTask) :
         eopatch.add_feature(FeatureType.DATA, "NDVI", self.NDVI[..., np.newaxis])
         eopatch.add_feature(FeatureType.DATA, "NDWI", self.NDVI[..., np.newaxis])
         eopatch.add_feature(FeatureType.DATA, "GNDVI", self.NDVI[..., np.newaxis])
+        eopatch.add_feature(FeatureType.DATA, "NDI45", self.NDI45[..., np.newaxis])
+        eopatch.add_feature(FeatureType.DATA, "IRECI", self.IRECI[..., np.newaxis])
+        eopatch.add_feature(FeatureType.DATA, "CI", self.CI[..., np.newaxis])
+        eopatch.add_feature(FeatureType.DATA, "BI", self.BI[..., np.newaxis])
+        eopatch.add_feature(FeatureType.DATA, "RI", self.RI[..., np.newaxis])
         eopatch.remove_feature(FeatureType.DATA, "ILLUMINATION")
 
         return eopatch
